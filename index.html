@@ -2,14 +2,25 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Patriotas Analytics · Plataforma em Nuvem Firebase</title>
+  
+  <!-- PWA & Mobile Meta Tags -->
+  <meta name="theme-color" content="#060709" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Patriotas App" />
+  <link rel="manifest" href="manifest.json" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <!-- SheetJS & Firebase CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
   <style>
     :root {
       --bg: #060709;
@@ -59,7 +70,7 @@
 
     /* Header */
     header {
-      padding: 32px 0 16px;
+      padding: 24px 0 16px;
       border-bottom: 1px solid var(--border);
       background: linear-gradient(180deg, #030406 0%, #080A0E 100%);
     }
@@ -67,7 +78,7 @@
     .header-content {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 16px;
       text-align: left;
     }
 
@@ -75,6 +86,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-bottom: 12px;
     }
 
@@ -82,8 +95,14 @@
       color: var(--orange);
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-actions-group {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -108,29 +127,50 @@
       color: var(--text-dim);
     }
 
+    .btn-install-app {
+      background: var(--orange);
+      color: #060709;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 0 12px rgba(255, 163, 38, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-install-app:hover {
+      background: var(--orange-deep);
+      color: #FFF;
+    }
+
     .logo-brand-row {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 12px;
+      gap: 14px;
+      margin-bottom: 10px;
     }
 
     .logo-shield-img {
-      height: 52px;
+      height: 48px;
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
     }
 
     .logo-brand-name {
-      font-size: 46px;
+      font-size: 40px;
       color: #FFFFFF;
       line-height: 1;
       letter-spacing: 0.04em;
     }
 
     .header-subtitle {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-dim);
       line-height: 1.5;
     }
@@ -139,33 +179,35 @@
     .container {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 24px 20px 80px;
+      padding: 20px 16px 80px;
     }
 
     /* Navigation Tabs */
     .nav-tabs-row {
       display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
+      gap: 8px;
+      margin-bottom: 20px;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
+      padding-bottom: 10px;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .tab-btn {
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text-dim);
-      padding: 10px 18px;
+      padding: 10px 16px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       white-space: nowrap;
       transition: all 0.2s ease;
+      min-height: 42px;
     }
 
     .tab-btn:hover {
@@ -183,27 +225,15 @@
     .kpi-grid-6 {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-
-    @media (max-width: 1100px) {
-      .kpi-grid-6 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .kpi-grid-6 {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
     .kpi-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px 18px;
+      padding: 14px 16px;
       position: relative;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
@@ -216,11 +246,11 @@
     .kpi-icon-orange {
       font-size: 14px;
       color: var(--orange);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .kpi-val {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--text);
       line-height: 1.1;
@@ -228,18 +258,18 @@
     }
 
     .kpi-val-sm {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       color: var(--text);
       line-height: 1.2;
       margin-bottom: 4px;
-      min-height: 28px;
+      min-height: 26px;
       display: flex;
       align-items: center;
     }
 
     .kpi-lbl {
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 700;
       color: var(--text-dim);
       text-transform: uppercase;
@@ -248,20 +278,20 @@
 
     /* Circuit Steps Section */
     .circuit-section {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 18px 20px;
+      padding: 16px 18px;
     }
 
     .ctrl-section-lbl {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 800;
       color: var(--orange);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -273,32 +303,34 @@
       gap: 10px;
       width: 100%;
       overflow-x: auto;
-      padding-bottom: 4px;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
     }
 
     .btn-pill-main {
       background: var(--orange);
       border: 1px solid var(--orange);
       color: #060709;
-      padding: 9px 18px;
+      padding: 8px 16px;
       border-radius: 30px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
       letter-spacing: 0.05em;
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.15s ease;
+      min-height: 38px;
     }
 
     .btn-pill-main.active {
-      box-shadow: 0 0 16px rgba(255, 163, 38, 0.4);
+      box-shadow: 0 0 14px rgba(255, 163, 38, 0.4);
     }
 
     .btn-pill-stage {
       background: var(--surface2);
       border: 1px solid var(--border);
       color: var(--text-dim);
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 8px;
       text-align: left;
       cursor: pointer;
@@ -307,6 +339,7 @@
       gap: 2px;
       white-space: nowrap;
       transition: all 0.15s ease;
+      min-height: 38px;
     }
 
     .btn-pill-stage:hover {
@@ -320,7 +353,7 @@
     }
 
     .stage-dot-date {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       color: var(--text-faint);
       display: flex;
@@ -334,7 +367,7 @@
     }
 
     .stage-location {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
       color: var(--text);
       letter-spacing: 0.03em;
@@ -344,7 +377,7 @@
       flex: 1;
       height: 1px;
       border-bottom: 2px dashed var(--border);
-      min-width: 40px;
+      min-width: 30px;
     }
 
     /* Filters Bar */
@@ -354,7 +387,7 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .select-dropdown {
@@ -365,7 +398,14 @@
       border-radius: 8px;
       font-size: 13px;
       outline: none;
-      min-width: 260px;
+      min-width: 240px;
+      width: 100%;
+    }
+
+    @media (min-width: 600px) {
+      .select-dropdown {
+        width: auto;
+      }
     }
 
     .select-dropdown:focus {
@@ -377,25 +417,19 @@
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       gap: 20px;
-      margin-bottom: 28px;
-    }
-
-    @media (max-width: 960px) {
-      .grid-2col {
-        grid-template-columns: 1fr;
-      }
+      margin-bottom: 24px;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 22px;
+      padding: 20px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.5);
     }
 
     .card-title {
-      font-size: 20px;
+      font-size: 19px;
       margin-bottom: 4px;
       display: flex;
       align-items: center;
@@ -405,7 +439,7 @@
     .card-subtitle {
       font-size: 11px;
       color: var(--text-dim);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     /* Podium Display (Top 3) */
@@ -413,17 +447,17 @@
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 12px;
-      margin: 10px 0 20px;
-      padding: 10px 0;
+      gap: 10px;
+      margin: 8px 0 18px;
+      padding: 8px 0;
     }
 
     .podium-box {
       flex: 1;
-      max-width: 140px;
+      max-width: 130px;
       text-align: center;
       border-radius: 8px 8px 0 0;
-      padding: 12px 8px 10px;
+      padding: 10px 6px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -433,29 +467,29 @@
     .podium-1 {
       background: linear-gradient(180deg, rgba(41,199,245,0.25), rgba(41,199,245,0.05));
       border: 1px solid rgba(41,199,245,0.4);
-      height: 110px;
+      height: 105px;
     }
 
     .podium-2 {
       background: linear-gradient(180deg, rgba(200,200,200,0.15), rgba(200,200,200,0.03));
       border: 1px solid rgba(200,200,200,0.3);
-      height: 90px;
+      height: 85px;
     }
 
     .podium-3 {
       background: linear-gradient(180deg, rgba(224,126,16,0.2), rgba(224,126,16,0.04));
       border: 1px solid rgba(224,126,16,0.35);
-      height: 80px;
+      height: 75px;
     }
 
     .podium-rank {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       margin-bottom: 4px;
     }
@@ -465,35 +499,36 @@
     .podium-3 .podium-rank { background: #E07E10; color: #060709; }
 
     .podium-name {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
       line-height: 1.2;
       color: var(--text);
-      max-height: 26px;
+      max-height: 24px;
       overflow: hidden;
       margin-bottom: 2px;
     }
 
     .podium-pts {
-      font-size: 10px;
+      font-size: 9.5px;
       color: var(--text-dim);
     }
 
     /* Table */
     .table-container {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12.5px;
+      font-size: 12px;
     }
 
     th {
       text-align: left;
       color: var(--text-faint);
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
       padding: 8px 6px;
       border-bottom: 1px solid var(--border);
@@ -686,6 +721,51 @@
       font-size: 11px;
       color: var(--text-faint);
     }
+
+    /* Mobile Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .grid-2col {
+        grid-template-columns: 1fr;
+      }
+      .kpi-grid-6 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 18px 0 14px;
+      }
+      .logo-brand-name {
+        font-size: 32px;
+      }
+      .logo-shield-img {
+        height: 38px;
+      }
+      .kpi-grid-6 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .detail-charts-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .detail-header-flex {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+      }
+      .detail-stats-row {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+      }
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .hbar-name {
+        width: 85px;
+        font-size: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -694,9 +774,12 @@
     <div class="header-content">
       <div class="header-top-row">
         <div class="header-sub-badge">GRUPO DE CORRIDA &nbsp;·&nbsp; BOA VISTA DO BURICÁ, RS</div>
-        <div class="cloud-sync-badge" id="cloud-status-badge">
-          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green);"></span>
-          Sincronizado via Firebase Realtime
+        <div class="header-actions-group">
+          <button class="btn-install-app" id="btn-install-pwa" onclick="triggerPWAInstall()">📲 Baixar App</button>
+          <div class="cloud-sync-badge" id="cloud-status-badge">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green);"></span>
+            Firebase Realtime
+          </div>
         </div>
       </div>
       <div class="logo-brand-row">
@@ -762,7 +845,7 @@
       <!-- Filter Bar -->
       <div class="filter-bar">
         <select id="cat-select-filter" class="select-dropdown"></select>
-        <input type="text" id="search-input" class="select-dropdown" placeholder="🔍 Buscar por atleta..." style="min-width: 240px;" />
+        <input type="text" id="search-input" class="select-dropdown" placeholder="🔍 Buscar por atleta..." />
       </div>
 
       <!-- Main 2-Column Grid -->
@@ -778,12 +861,12 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width: 36px;">#</th>
+                  <th style="width: 30px;">#</th>
                   <th>ATLETA</th>
                   <th>CATEGORIA</th>
                   <th style="text-align: center;">PACE MÉD.</th>
-                  <th style="text-align: right; width: 50px;">ETAPAS</th>
-                  <th style="text-align: right; width: 65px;">PONTOS</th>
+                  <th style="text-align: right; width: 45px;">ETAPAS</th>
+                  <th style="text-align: right; width: 55px;">PONTOS</th>
                 </tr>
               </thead>
               <tbody id="ranking-table-body"></tbody>
@@ -802,15 +885,21 @@
 
     <!-- TAB 2: CATEGORY & TEAM ANALYTICS -->
     <div id="tab-content-categories" style="display: none;">
+      <!-- Stage Selector Specifically for Category Tab -->
+      <div class="circuit-section" style="margin-bottom: 20px;">
+        <div class="ctrl-section-lbl">📍 FILTRAR ANÁLISE DE CATEGORIAS POR ETAPA</div>
+        <div class="circuit-line-wrapper" id="cat-etapa-pills-container"></div>
+      </div>
+
       <div class="grid-2col">
         <div class="card">
           <h2 class="card-title disp">👥 DISTRIBUIÇÃO POR CATEGORIA</h2>
-          <p class="card-subtitle">Atletas participantes por faixa etária</p>
+          <p class="card-subtitle" id="cat-dist-subtitle">Atletas participantes por faixa etária</p>
           <div id="cat-distribution-bars" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
         <div class="card">
           <h2 class="card-title disp">👑 LÍDERES DE CATEGORIA</h2>
-          <p class="card-subtitle">Atletas com maior pontuação acumulada em cada grupo</p>
+          <p class="card-subtitle" id="cat-leaders-subtitle">Vencedores e pontuadores em cada faixa etária</p>
           <div id="cat-leaders-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
       </div>
@@ -818,29 +907,29 @@
 
     <!-- Athlete Detail Card (FICHA DO ATLETA PROFISSIONAL) -->
     <div id="athlete-detail-card" class="card detail-section" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 20px;">
+      <div class="detail-header-flex" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 20px;">
         <div>
           <div style="font-size: 11px; color: var(--orange-deep); font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;">FICHA ANALÍTICA DE DESEMPENHO</div>
-          <h2 class="disp" id="detail-name" style="font-size: 34px; margin: 2px 0;"></h2>
-          <span id="detail-category" style="font-size: 13px; color: var(--text-dim);"></span>
+          <h2 class="disp" id="detail-name" style="font-size: 30px; margin: 2px 0;"></h2>
+          <span id="detail-category" style="font-size: 12px; color: var(--text-dim);"></span>
         </div>
-        <div style="display: flex; align-items: center; gap: 20px;">
-          <div style="display: flex; gap: 22px; text-align: center;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="detail-stats-row" style="display: flex; gap: 16px; text-align: center;">
             <div>
-              <div class="mono" id="detail-pontos" style="font-size: 28px; font-weight: 800; color: var(--orange);"></div>
-              <div style="font-size: 10px; color: var(--text-faint); font-weight: 700;">PONTOS</div>
+              <div class="mono" id="detail-pontos" style="font-size: 24px; font-weight: 800; color: var(--orange);"></div>
+              <div style="font-size: 9.5px; color: var(--text-faint); font-weight: 700;">PONTOS</div>
             </div>
             <div>
-              <div class="mono" id="detail-etapas" style="font-size: 28px; font-weight: 800;"></div>
-              <div style="font-size: 10px; color: var(--text-faint); font-weight: 700;">ETAPAS</div>
+              <div class="mono" id="detail-etapas" style="font-size: 24px; font-weight: 800;"></div>
+              <div style="font-size: 9.5px; color: var(--text-faint); font-weight: 700;">ETAPAS</div>
             </div>
             <div>
-              <div class="mono" id="detail-pace-med" style="font-size: 28px; font-weight: 800; color: var(--green);"></div>
-              <div style="font-size: 10px; color: var(--text-faint); font-weight: 700;">PACE MÉD.</div>
+              <div class="mono" id="detail-pace-med" style="font-size: 24px; font-weight: 800; color: var(--green);"></div>
+              <div style="font-size: 9.5px; color: var(--text-faint); font-weight: 700;">PACE MÉD.</div>
             </div>
             <div>
-              <div class="mono" id="detail-class" style="font-size: 28px; font-weight: 800; color: var(--blue);"></div>
-              <div style="font-size: 10px; color: var(--text-faint); font-weight: 700;">MELHOR POS.</div>
+              <div class="mono" id="detail-class" style="font-size: 24px; font-weight: 800; color: var(--blue);"></div>
+              <div style="font-size: 9.5px; color: var(--text-faint); font-weight: 700;">MELHOR POS.</div>
             </div>
           </div>
           <button class="btn-close" id="btn-close-detail" title="Fechar ficha">✕</button>
@@ -848,7 +937,7 @@
       </div>
 
       <!-- Detail Charts: Points & Pace Progression -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+      <div class="detail-charts-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
         <div>
           <div style="font-size: 11px; font-weight: 700; color: var(--orange); margin-bottom: 6px;">📈 EVOLUÇÃO DE PONTOS</div>
           <div id="detail-chart-svg"></div>
@@ -919,9 +1008,34 @@
     let records = [...RAW_SEED];
     let distFilter = "TODAS";
     let selectedEtapaIdx = -1;
+    let selectedCatEtapaIdx = -1;
     let searchKeyword = "";
     let selectedAthlete = null;
     let currentTab = "general";
+    let deferredPrompt = null;
+
+    // PWA Install Prompt Listener
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const btnInstall = document.getElementById("btn-install-pwa");
+      if (btnInstall) btnInstall.style.display = "inline-flex";
+    });
+
+    function triggerPWAInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === "accepted") {
+            console.log("App Patriotas instalado com sucesso!");
+          }
+          deferredPrompt = null;
+          document.getElementById("btn-install-pwa").style.display = "none";
+        });
+      } else {
+        alert("📲 COMO INSTALAR O APP NO SEU CELULAR:\n\n1. No Chrome (Android/PC): Toque nos 3 pontinhos (⋮) no topo direito e selecione 'Adicionar à tela inicial' ou 'Instalar aplicativo'.\n\n2. No Safari (iPhone/iOS): Toque no ícone de Compartilhar (⎋) na barra inferior e selecione 'Adicionar à Tela de Início'.");
+      }
+    }
 
     function initFirebase() {
       const badge = document.getElementById("cloud-status-badge");
@@ -1177,6 +1291,11 @@
       updateUI();
     }
 
+    function setCatEtapaIdx(idx) {
+      selectedCatEtapaIdx = idx;
+      renderCategoryAnalytics();
+    }
+
     function updateUI() {
       const etapas = getEtapas();
       const scoped = getScopedRecords(etapas);
@@ -1204,11 +1323,23 @@
       document.getElementById("kpi-pace-medio").innerText = teamPaceFmt;
       document.getElementById("kpi-ultima").innerText = ultimaEtapa ? ultimaEtapa.local : '—';
 
-      // Etapa Pills
+      // Etapa Pills (Main Tab)
       document.getElementById("etapa-pills-container").innerHTML = [
         `<button class="btn-pill-main ${selectedEtapaIdx === -1 ? 'active' : ''}" onclick="setEtapaIdx(-1)">GERAL · TODAS</button>`,
         ...etapas.map((et, idx) => `
           <button class="btn-pill-stage ${selectedEtapaIdx === idx ? 'active' : ''}" onclick="setEtapaIdx(${idx})">
+            <span class="stage-dot-date"><span class="cyan-dot">●</span> ETAPA ${idx + 1} · ${fmtDateBR(et.data)}</span>
+            <span class="stage-location">${et.local}</span>
+          </button>
+        `),
+        `<div class="dashed-line"></div>`
+      ].join("");
+
+      // Etapa Pills (Categories Tab)
+      document.getElementById("cat-etapa-pills-container").innerHTML = [
+        `<button class="btn-pill-main ${selectedCatEtapaIdx === -1 ? 'active' : ''}" onclick="setCatEtapaIdx(-1)">GERAL · TODAS AS ETAPAS</button>`,
+        ...etapas.map((et, idx) => `
+          <button class="btn-pill-stage ${selectedCatEtapaIdx === idx ? 'active' : ''}" onclick="setCatEtapaIdx(${idx})">
             <span class="stage-dot-date"><span class="cyan-dot">●</span> ETAPA ${idx + 1} · ${fmtDateBR(et.data)}</span>
             <span class="stage-location">${et.local}</span>
           </button>
@@ -1295,8 +1426,25 @@
     }
 
     function renderCategoryAnalytics() {
+      const etapas = getEtapas();
+
+      let catRecs = records;
+      let titleLabel = "TODAS AS ETAPAS";
+      if (selectedCatEtapaIdx >= 0 && etapas[selectedCatEtapaIdx]) {
+        const et = etapas[selectedCatEtapaIdx];
+        titleLabel = `ETAPA ${selectedCatEtapaIdx + 1} - ${et.local} (${fmtDateBR(et.data)})`;
+        catRecs = records.filter(r => {
+          const dateIso = (typeof r.data === 'number') ? excelDateToISO(r.data) : r.data;
+          return dateIso === et.data && r.local === et.local;
+        });
+      }
+
+      document.getElementById("cat-dist-subtitle").innerText = `Atletas participantes por faixa etária · ${titleLabel} (${catRecs.length} registros)`;
+      document.getElementById("cat-leaders-subtitle").innerText = `Destaques por faixa etária · ${titleLabel}`;
+
       const catCounts = new Map();
-      records.forEach(r => {
+      catRecs.forEach(r => {
+        if (!r.nome) return;
         const fa = faixaEtaria(r.categoria);
         catCounts.set(fa, (catCounts.get(fa) || 0) + 1);
       });
@@ -1304,38 +1452,58 @@
       const sortedCat = Array.from(catCounts.entries()).sort((a, b) => b[1] - a[1]);
       const maxCount = Math.max(1, ...sortedCat.map(c => c[1]));
 
-      document.getElementById("cat-distribution-bars").innerHTML = sortedCat.map(([catName, count]) => {
-        const pct = (count / maxCount) * 100;
-        return `
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div style="width: 140px; font-size: 11px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${catName}</div>
-            <div style="flex: 1; background: var(--surface2); height: 18px; border-radius: 4px; overflow: hidden;">
-              <div style="width: ${pct}%; height: 100%; background: var(--blue); border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px;">
-                <span style="font-size: 10px; font-weight: 700; color: #060709;">${count}</span>
+      const distContainer = document.getElementById("cat-distribution-bars");
+      if (sortedCat.length === 0) {
+        distContainer.innerHTML = `<p style="color: var(--text-faint); padding: 10px;">Nenhum registro para esta etapa.</p>`;
+      } else {
+        distContainer.innerHTML = sortedCat.map(([catName, count]) => {
+          const pct = (count / maxCount) * 100;
+          return `
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 130px; font-size: 11px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${catName}</div>
+              <div style="flex: 1; background: var(--surface2); height: 18px; border-radius: 4px; overflow: hidden;">
+                <div style="width: ${pct}%; height: 100%; background: var(--blue); border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px;">
+                  <span style="font-size: 10px; font-weight: 700; color: #060709;">${count} ${selectedCatEtapaIdx >= 0 ? 'atleta' : 'participações'}</span>
+                </div>
               </div>
             </div>
-          </div>
-        `;
-      }).join("");
+          `;
+        }).join("");
+      }
 
-      const fullRanking = getRanking(records);
       const leadersMap = new Map();
-      fullRanking.forEach(a => {
-        const fa = faixaEtaria(a.categoria);
-        if (!leadersMap.has(fa) || a.pontos > leadersMap.get(fa).pontos) {
-          leadersMap.set(fa, a);
-        }
-      });
+      if (selectedCatEtapaIdx >= 0) {
+        catRecs.forEach(r => {
+          if (!r.nome) return;
+          const fa = faixaEtaria(r.categoria);
+          if (!leadersMap.has(fa) || (r.classCategoria === 1 || (r.pontos > leadersMap.get(fa).pontos))) {
+            leadersMap.set(fa, { nome: r.nome, val: `${r.pontos} pts (Tempo: ${fmtTempo(r.tempo)})` });
+          }
+        });
+      } else {
+        const fullRanking = getRanking(records);
+        fullRanking.forEach(a => {
+          const fa = faixaEtaria(a.categoria);
+          if (!leadersMap.has(fa) || a.pontos > leadersMap.get(fa).valPts) {
+            leadersMap.set(fa, { nome: a.nome, val: `${a.pontos} pts`, valPts: a.pontos });
+          }
+        });
+      }
 
-      document.getElementById("cat-leaders-list").innerHTML = Array.from(leadersMap.entries()).map(([catName, leader]) => `
-        <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface2); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border);">
-          <div>
-            <div style="font-size: 10px; color: var(--orange); font-weight: 700;">${catName}</div>
-            <div style="font-size: 13px; font-weight: 700;">${leader.nome}</div>
+      const leadersContainer = document.getElementById("cat-leaders-list");
+      if (leadersMap.size === 0) {
+        leadersContainer.innerHTML = `<p style="color: var(--text-faint); padding: 10px;">Nenhum registro para esta etapa.</p>`;
+      } else {
+        leadersContainer.innerHTML = Array.from(leadersMap.entries()).map(([catName, item]) => `
+          <div style="display: flex; justify-content: space-between; align-items: center; background: var(--surface2); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border);">
+            <div>
+              <div style="font-size: 10px; color: var(--orange); font-weight: 700;">${catName}</div>
+              <div style="font-size: 13px; font-weight: 700;">${item.nome}</div>
+            </div>
+            <div class="mono" style="font-size: 14px; font-weight: 800; color: var(--blue);">${item.val}</div>
           </div>
-          <div class="mono" style="font-size: 16px; font-weight: 800; color: var(--blue);">${leader.pontos} pts</div>
-        </div>
-      `).join("");
+        `).join("");
+      }
     }
 
     function renderAthleteDetail(etapas) {
@@ -1584,6 +1752,18 @@
     });
 
     // Init
+    
+    // Register PWA Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          console.log('PWA ServiceWorker registrado com sucesso:', reg.scope);
+        }).catch((err) => {
+          console.log('ServiceWorker nota:', err.message);
+        });
+      });
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
       initFirebase();
       updateUI();
