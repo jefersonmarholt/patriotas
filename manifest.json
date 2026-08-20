@@ -2,7 +2,7 @@
   "name": "Patriotas Analytics - Grupo de Corrida",
   "short_name": "Patriotas",
   "description": "Plataforma de Desempenho e Ranking do Grupo de Corrida Patriotas",
-  "start_url": "./patriotas_dashboard.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
